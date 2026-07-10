@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -27,7 +27,7 @@ class FundamentalData(BaseModel):
     promoter_holding: Decimal | None = None
     fii_holding: Decimal | None = None
     dii_holding: Decimal | None = None
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
     @field_validator("updated_at", mode="before")
     @classmethod
@@ -35,10 +35,10 @@ class FundamentalData(BaseModel):
         if isinstance(value, datetime):
             if value.tzinfo is None:
                 raise ValueError("updated_at must be timezone-aware")
-            return value.astimezone(timezone.utc)
+            return value.astimezone(UTC)
         if isinstance(value, str):
             parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
             if parsed.tzinfo is None:
                 raise ValueError("updated_at must be timezone-aware")
-            return parsed.astimezone(timezone.utc)
+            return parsed.astimezone(UTC)
         raise TypeError("updated_at must be a datetime")

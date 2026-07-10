@@ -1,14 +1,15 @@
 from abc import ABC, abstractmethod
-from typing import Any
+
+from app.domain.fundamentals import FundamentalData
 
 
 class FundamentalProvider(ABC):
     """Abstract fundamental-data provider contract."""
 
     @abstractmethod
-    async def get_fundamentals(self, symbol: str, exchange: str) -> dict[str, Any]:
-        """Return provider-normalized fundamentals for a symbol."""
+    async def get_fundamentals(self, symbol: str, exchange: str) -> FundamentalData:
+        """Return provider-normalized fundamentals as a domain object."""
 
     @abstractmethod
-    async def refresh_symbol(self, symbol: str, exchange: str) -> dict[str, Any]:
+    async def refresh_symbol(self, symbol: str, exchange: str) -> FundamentalData:
         """Refresh and return the latest fundamentals for a symbol."""

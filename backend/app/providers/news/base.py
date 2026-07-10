@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Any
+
+from app.domain.news import NewsEvent
 
 
 class NewsProvider(ABC):
@@ -13,8 +14,8 @@ class NewsProvider(ABC):
         exchange: str,
         start_at: datetime,
         end_at: datetime,
-    ) -> list[dict[str, Any]]:
-        """Return market events for a symbol."""
+    ) -> tuple[NewsEvent, ...]:
+        """Return normalized market events for a symbol."""
 
     @abstractmethod
     async def get_news(
@@ -23,5 +24,5 @@ class NewsProvider(ABC):
         exchange: str,
         start_at: datetime,
         end_at: datetime,
-    ) -> list[dict[str, Any]]:
-        """Return news items for a symbol."""
+    ) -> tuple[NewsEvent, ...]:
+        """Return normalized news items for a symbol."""

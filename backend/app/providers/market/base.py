@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from decimal import Decimal
-from typing import Any
 
 from app.core.enums import TimeFrame
+from app.domain.collections import CandleSeries
+from app.domain.market import Price
 
 
 class MarketProvider(ABC):
@@ -14,20 +14,20 @@ class MarketProvider(ABC):
     """
 
     @abstractmethod
-    async def get_live_price(self, symbol: str, exchange: str) -> Decimal:
-        """Return the latest available price for a symbol."""
+    async def get_latest_price(self, symbol: str, exchange: str) -> Price:
+        """Return the latest available price as a normalized domain object."""
 
     @abstractmethod
-    async def get_historical_data(
+    async def get_candles(
         self,
         symbol: str,
         exchange: str,
         timeframe: TimeFrame,
         start_at: datetime,
         end_at: datetime,
-    ) -> list[dict[str, Any]]:
-        """Return historical candle data for a symbol and timeframe."""
+    ) -> CandleSeries:
+        """Return historical candles as a normalized domain collection."""
 
     @abstractmethod
-    async def search_symbols(self, query: str) -> list[dict[str, Any]]:
-        """Search tradable symbols using provider-specific discovery."""
+    async def search_symbols(self, query: str) -> tuple[str, ...]:
+        """Search tradable symbol identifiers using provider-specific discovery."""

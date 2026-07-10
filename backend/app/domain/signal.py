@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Literal
 
@@ -19,7 +19,7 @@ class Signal(BaseModel):
     entry_price: Decimal | None = None
     stop_loss: Decimal | None = None
     target: Decimal | None = None
-    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     signal_type: str
 
     @field_validator("generated_at", mode="before")
@@ -28,10 +28,10 @@ class Signal(BaseModel):
         if isinstance(value, datetime):
             if value.tzinfo is None:
                 raise ValueError("generated_at must be timezone-aware")
-            return value.astimezone(timezone.utc)
+            return value.astimezone(UTC)
         if isinstance(value, str):
             parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
             if parsed.tzinfo is None:
                 raise ValueError("generated_at must be timezone-aware")
-            return parsed.astimezone(timezone.utc)
+            return parsed.astimezone(UTC)
         raise TypeError("generated_at must be a datetime")

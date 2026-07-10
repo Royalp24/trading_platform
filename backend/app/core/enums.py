@@ -4,7 +4,12 @@ from enum import StrEnum
 class MarketType(StrEnum):
     """Supported market segments."""
 
-    EQUITY = "equity"
+    INDIAN_STOCK = "indian_stock"
+    FOREX = "forex"
+    CRYPTO = "crypto"
+    COMMODITY = "commodity"
+    FUTURES = "futures"
+    OPTIONS = "options"
 
 
 class OrderType(StrEnum):
@@ -42,10 +47,18 @@ class TimeFrame(StrEnum):
     """Canonical market-data candle intervals."""
 
     ONE_MINUTE = "1m"
+    THREE_MINUTES = "3m"
     FIVE_MINUTES = "5m"
+    TEN_MINUTES = "10m"
     FIFTEEN_MINUTES = "15m"
+    THIRTY_MINUTES = "30m"
+    FORTY_FIVE_MINUTES = "45m"
     ONE_HOUR = "1h"
+    TWO_HOURS = "2h"
+    FOUR_HOURS = "4h"
     ONE_DAY = "1d"
+    ONE_WEEK = "1w"
+    ONE_MONTH = "1M"
 
 
 class BotStatus(StrEnum):

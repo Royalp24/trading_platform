@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Any
 
+from app.domain.fundamentals import FundamentalData
 from app.providers.fundamental import FundamentalProvider
 
 
@@ -10,9 +10,9 @@ class FundamentalService(ABC):
     provider: FundamentalProvider
 
     @abstractmethod
-    async def get_fundamentals(self, symbol: str, exchange: str) -> dict[str, Any]:
+    async def get_fundamentals(self, symbol: str, exchange: str) -> FundamentalData:
         """Return normalized fundamentals for a symbol."""
 
     @abstractmethod
-    async def refresh_symbol(self, symbol: str, exchange: str) -> dict[str, Any]:
+    async def refresh_symbol(self, symbol: str, exchange: str) -> FundamentalData:
         """Refresh fundamentals through the provider boundary."""

@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
+from app.domain.collections import PortfolioSnapshot
+
 
 class PaperTradingService(ABC):
     """Service contract for future virtual portfolio operations."""
 
     @abstractmethod
-    async def get_account_state(self, paper_account_id: UUID) -> dict[str, object]:
+    async def get_account_state(self, paper_account_id: UUID) -> PortfolioSnapshot:
         """Return account state for downstream dashboard and analytics modules."""
 
     @abstractmethod

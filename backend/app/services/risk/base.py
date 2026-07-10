@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Any
 from uuid import UUID
+
+from app.domain.signals import Signal
 
 
 class RiskService(ABC):
@@ -10,6 +11,6 @@ class RiskService(ABC):
     async def assess_order(
         self,
         paper_account_id: UUID,
-        order_payload: dict[str, Any],
+        signal: Signal,
     ) -> bool:
-        """Assess whether an order payload satisfies configured risk constraints."""
+        """Assess whether a signal satisfies configured risk constraints."""
